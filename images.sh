@@ -3,6 +3,9 @@
 # Requires ROX_ENDPOINT and ROX_API_TOKEN environment variables
 # Requires analyst access or more in ACS
 # Usage: $0 name-of-namespace-to-scan | nothing-which-scans-all-namespaces
+# Magnus Glantz, sudo@redhat.com, 2021, with great help from Neil Carpenter 
+# and inspiration from https://github.com/stackrox/contributions/blob/main/util-scripts/violations-to-csv/violations-to-csv.sh
+
 
 case $1 in
 	*help)
