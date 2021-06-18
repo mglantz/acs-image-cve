@@ -1,5 +1,5 @@
 # acs-image-cve
-Script which uses Red Hat Advanced Cluster Security integration to generate a CVS file that containers CVE vulnerability data for images in a specific or all namespaces in your cluster.
+Script which uses Red Hat Advanced Cluster Security integration to generate a CVS file that contains CVE vulnerability data for images in a specific or all namespaces in your cluster.
 
 ```
 ./images.sh my-namespace
