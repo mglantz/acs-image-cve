@@ -24,9 +24,8 @@ if [[ -z "${ROX_API_TOKEN}" ]]; then
 fi
 
 if [[ -z "${1}" ]]; then
-	all_namespaces=1
+	namespace="all"
 else
-	all_namespaces=0
 	namespace=$1
 fi
 
@@ -39,26 +38,13 @@ function curl_central() {
 
 # Gather CVEs for images in all or one namespace
 
-if [ -f results.json ]; then
-	rm -f results.json
-fi
-
-if [[ "$all_namespaces" -eq 1 ]]; then
-	for namespace in $(curl_central "v1/namespaces" | jq -r ".namespaces[].metadata.name")
-	do
-		for imageid in $(curl_central "v1/images?query=Namespace:${namespace}"|jq -r ".images[] | select(.cves != null) | .id")
-		do
-			echo "We are in $namespace looking at $imageid"
-			curl_central v1/images/{$imageid}|jq >>results.json
-		done
-	done
-elif [[ "$all_namespaces" -eq 0 ]]; then
+for namespace in $(curl_central "v1/namespaces" | jq --arg namespace "$namespace" -r '.namespaces[].metadata | { name } | if $namespace=="all" then select(.) else select(.name == $namespace) end | .name')
+do
 	for imageid in $(curl_central "v1/images?query=Namespace:${namespace}"|jq -r ".images[] | select(.cves != null) | .id")
 	do
-		echo "We are in $namespace looking at $imageid"
-		curl_central v1/images/{$imageid}|jq >>results.json
+	    imagename=$(curl_central v1/images/{$imageid} | jq -r jq '.name.fullName | gsub("/"; "_")')
+		echo "We are in $namespace looking at $imagename"
+		curl_central v1/images/{$imageid} | jq -r  -f $HOME/layers_file > ${namespace}-${imagename}.csv
 	done
-fi
-
-jq -r  -f layers_query result.json
+done
 
