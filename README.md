@@ -4,7 +4,7 @@ Script which uses Red Hat Advanced Cluster Security integration to generate a CV
 ```
 ./images.sh my-namespace
 
-We are in acstest looking at sha256:55228aae65073e129dc0b9485fcf1b00f73b980eea135fcfe1f079383e7895e3
+We are in my-namespace looking at sha256:55228aae65073e129dc0b9485fcf1b00f73b980eea135fcfe1f079383e7895e3
 "CVE","CVSS Score","Summary","Component","Version","Fixed By","Layer Index","Layer Instruction"
 "CVE-2015-5186",4.3,"","audit-libs","2.8.5-4.el7.x86_64",,0,"RUN "
 "CVE-2012-6711",7,"DOCUMENTATION: A heap-based buffer overflow was discovered in bash when wide characters, not supported by the current locale set in LC_CTYPE 
